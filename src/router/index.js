@@ -3,7 +3,11 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
     path: "/",
-    component: () => import("@/views/LobbyRoomView.vue"),
+    component: () => import("../views/LobbyRoomView.vue"),
+  },
+  {
+    path: "/rooms/:id",
+    component: () => import("../views/RoomView.vue"),
   },
   {
     path: "/:pathMatch(.*)*",
