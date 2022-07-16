@@ -44,12 +44,14 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from "vue";
 import { useRoute } from "vue-router";
-import gun from "../services/gun.service.js";
+import { useRoomStore } from "../stores/room.store.js";
 
 import BaseCard from "../components/BaseCard.vue";
 
 const route = useRoute();
 const id = route.params.id;
+
+const roomStore = useRoomStore();
 
 const isVoting = ref(false);
 const showResults = ref(false);
@@ -59,25 +61,10 @@ const cards = ["XS", "S", "M", "L", "XL", "🪓", "☕️"];
 const votes = ref([]);
 
 onMounted(async () => {
-  gun
-    .get("rooms")
-    .get(id.toString())
-    .on((data) => {
-      console.log(data);
-    });
-
-  gun
-    .get("rooms")
-    .get(id.toString())
-    .get("users")
-    .map()
-    .on((data) => {
-      console.log(data);
-    });
+  roomStore.getRoom(id);
 });
 
 onUnmounted(() => {
-  gun.get("rooms").get(id.toString()).off();
-  gun.get("rooms").get(id.toString()).get("users").off();
+  roomStore.reset();
 });
 </script>

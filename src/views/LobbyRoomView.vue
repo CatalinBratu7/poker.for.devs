@@ -35,7 +35,7 @@ const createRoom = () => {
     admin: true,
   };
 
-  gun.get(`rooms`).get(roomId).get(`users`).put(administrator);
+  gun.get(`rooms`).get(roomId).get(`users`).get(administrator.id).put(administrator);
 
   router.push(`/rooms/${roomId}`);
 };
