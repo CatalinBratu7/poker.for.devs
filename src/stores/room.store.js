@@ -7,28 +7,6 @@ export const useRoomStore = defineStore("room", {
     users: [],
   }),
   actions: {
-    getRoom(id) {
-      gun
-        .get("rooms")
-        .get(id.toString())
-        .on((room) => {
-          this.room = room;
-        });
-
-      gun
-        .get("rooms")
-        .get(id.toString())
-        .get("users")
-        .map()
-        .on((user) => {
-          const index = this.users.findIndex((u) => u.id === user.id);
-          if (index === -1) {
-            this.users.push(user);
-          } else {
-            this.users[index] = user;
-          }
-        });
-    },
     startVote() {
       gun.get("rooms").get(this.room.id).get("showVotingBoard").put(true);
       gun.get("rooms").get(this.room.id).get("showResults").put(false);

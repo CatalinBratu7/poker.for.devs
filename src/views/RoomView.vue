@@ -32,7 +32,7 @@
 import { onMounted, onUnmounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useRoomStore } from "../stores/room.store.js";
-import gun from "../services/gun.service.js";
+import { getRoom } from "../services/room.service.js";
 
 import BaseCard from "../components/BaseCard.vue";
 
@@ -45,35 +45,8 @@ const cards = ["XS", "S", "M", "L", "XL", "🪓", "☕️"];
 
 const votes = ref([]);
 
-const getRoom = () => {
-  gun
-    .get("rooms")
-    .get(id.toString())
-    .on((room) => {
-      roomStore.$patch({
-        room,
-      });
-    });
-
-  gun
-    .get("rooms")
-    .get(id.toString())
-    .get("users")
-    .map()
-    .on((user) => {
-      roomStore.$patch((state) => {
-        const index = state.users.findIndex((u) => u.id === user.id);
-        if (index === -1) {
-          state.users.push(user);
-        } else {
-          state.users[index] = user;
-        }
-      });
-    });
-};
-
 onMounted(async () => {
-  getRoom();
+  getRoom(id);
 });
 
 onUnmounted(() => {
