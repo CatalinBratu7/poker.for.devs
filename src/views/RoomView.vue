@@ -65,9 +65,19 @@ onMounted(async () => {
     .on((data) => {
       console.log(data);
     });
+
+  gun
+    .get("rooms")
+    .get(id.toString())
+    .get("users")
+    .map()
+    .on((data) => {
+      console.log(data);
+    });
 });
 
 onUnmounted(() => {
   gun.get("rooms").get(id.toString()).off();
+  gun.get("rooms").get(id.toString()).get("users").off();
 });
 </script>
