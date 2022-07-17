@@ -32,7 +32,7 @@
 import { onMounted, onUnmounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useRoomStore } from "../stores/room.store.js";
-import { getRoom } from "../services/room.service.js";
+import RoomService from "../services/room.service.js";
 
 import BaseCard from "../components/BaseCard.vue";
 
@@ -46,7 +46,7 @@ const cards = ["XS", "S", "M", "L", "XL", "🪓", "☕️"];
 const votes = ref([]);
 
 onMounted(async () => {
-  getRoom(id);
+  RoomService.getRoom(id);
 });
 
 onUnmounted(() => {

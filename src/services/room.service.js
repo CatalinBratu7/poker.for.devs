@@ -3,7 +3,7 @@ import gun from "./gun.service.js";
 
 const roomStore = useRoomStore();
 
-export const getRoom = (id) => {
+const getRoom = (id) => {
   gun
     .get("rooms")
     .get(id)
@@ -28,4 +28,30 @@ export const getRoom = (id) => {
         }
       });
     });
+};
+
+const createRoom = (roomName, administratorName) => {
+  const roomId = crypto.randomUUID();
+
+  gun.get(`rooms`).get(roomId).put({
+    id: roomId,
+    name: roomName,
+    showVotingBoard: false,
+    showResults: false,
+  });
+
+  const administrator = {
+    id: crypto.randomUUID(),
+    name: administratorName,
+    admin: true,
+  };
+
+  gun.get(`rooms`).get(roomId).get(`users`).get(administrator.id).put(administrator);
+
+  return roomId;
+};
+
+export default {
+  getRoom,
+  createRoom,
 };

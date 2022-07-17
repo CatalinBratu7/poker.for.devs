@@ -10,7 +10,7 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import gun from "../services/gun.service.js";
+import RoomService from "../services/room.service.js";
 
 import BaseCard from "../components/BaseCard.vue";
 
@@ -20,23 +20,7 @@ const userName = ref("");
 const roomName = ref("");
 
 const createRoom = () => {
-  const roomId = crypto.randomUUID();
-
-  gun.get(`rooms`).get(roomId).put({
-    id: roomId,
-    name: roomName.value,
-    showVotingBoard: false,
-    showResults: false,
-  });
-
-  const administrator = {
-    id: crypto.randomUUID(),
-    name: userName.value,
-    admin: true,
-  };
-
-  gun.get(`rooms`).get(roomId).get(`users`).get(administrator.id).put(administrator);
-
-  router.push(`/rooms/${roomId}`);
+  const id = RoomService.createRoom(roomName.value, userName.value);
+  router.push(`/rooms/${id}`);
 };
 </script>
