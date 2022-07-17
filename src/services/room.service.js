@@ -28,6 +28,17 @@ const getRoom = (id) => {
         }
       });
     });
+
+  gun
+    .get("rooms")
+    .get(id.toString())
+    .get("votes")
+    .map()
+    .on((vote) => {
+      roomStore.$patch((state) => {
+        state.votes.push(vote);
+      });
+    });
 };
 
 const createRoom = (roomName, administratorName) => {

@@ -9,7 +9,7 @@
     <BaseCard v-show="roomStore.room.showVotingBoard" class="flex flex-col gap-4">
       <div class="flex flex-row gap-4">
         <template v-for="(value, index) in cards" :key="`card_${index}`">
-          <button class="bg-teal-500 hover:bg-teal-600 rounded p-2 text-center" @click="votes.push(value)">
+          <button class="bg-teal-500 hover:bg-teal-600 rounded p-2 text-center" @click="addVote(value)">
             {{ value }}
           </button>
         </template>
@@ -23,13 +23,13 @@
     <BaseCard v-show="roomStore.room.showResults" class="flex flex-col gap-4 text-center">
       Results
       <br />
-      {{ votes }}
+      {{ roomStore.votes }}
     </BaseCard>
   </div>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import { useRoute } from "vue-router";
 import { useRoomStore } from "../stores/room.store.js";
 import RoomService from "../services/room.service.js";
@@ -43,7 +43,9 @@ const roomStore = useRoomStore();
 
 const cards = ["XS", "S", "M", "L", "XL", "🪓", "☕️"];
 
-const votes = ref([]);
+const addVote = (value) => {
+  roomStore.addVote(value);
+};
 
 onMounted(async () => {
   RoomService.getRoom(id);
