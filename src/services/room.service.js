@@ -28,17 +28,6 @@ const getRoom = (id) => {
         }
       });
     });
-
-  gun
-    .get("rooms")
-    .get(id.toString())
-    .get("votes")
-    .map()
-    .on((vote) => {
-      roomStore.$patch((state) => {
-        state.votes.push(vote);
-      });
-    });
 };
 
 const createRoom = (roomName, administratorName) => {
@@ -58,6 +47,10 @@ const createRoom = (roomName, administratorName) => {
   };
 
   gun.get(`rooms`).get(roomId).get(`users`).get(administrator.id).put(administrator);
+
+  roomStore.$patch((state) => {
+    state.userId = administrator.id;
+  });
 
   return roomId;
 };

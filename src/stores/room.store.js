@@ -5,7 +5,7 @@ export const useRoomStore = defineStore("room", {
   state: () => ({
     room: {},
     users: [],
-    votes: [],
+    userId: null,
   }),
   actions: {
     startVote() {
@@ -17,7 +17,7 @@ export const useRoomStore = defineStore("room", {
       gun.get("rooms").get(this.room.id).get("showResults").put(true);
     },
     addVote(vote) {
-      gun.get("rooms").get(this.room.id).get("votes").get(crypto.randomUUID()).put(vote);
+      gun.get("rooms").get(this.room.id).get("users").get(this.userId).get("vote").put(vote);
     },
     reset() {
       const id = this.room.id;

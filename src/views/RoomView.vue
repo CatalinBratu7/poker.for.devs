@@ -23,7 +23,7 @@
     <BaseCard v-show="roomStore.room.showResults" class="flex flex-col gap-4 text-center">
       Results
       <br />
-      {{ roomStore.votes }}
+      {{ roomStore.users.map((user) => user.vote) }}
     </BaseCard>
   </div>
 </template>
