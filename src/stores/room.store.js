@@ -11,6 +11,16 @@ export const useRoomStore = defineStore("room", {
     startVote() {
       gun.get("rooms").get(this.room.id).get("showVotingBoard").put(true);
       gun.get("rooms").get(this.room.id).get("showResults").put(false);
+      gun
+        .get("rooms")
+        .get(this.room.id)
+        .get("users")
+        .map()
+        .once((user) => {
+          gun.get("rooms").get(this.room.id).get("users").get(user.id).put({
+            vote: null,
+          });
+        });
     },
     endVote() {
       gun.get("rooms").get(this.room.id).get("showVotingBoard").put(false);
